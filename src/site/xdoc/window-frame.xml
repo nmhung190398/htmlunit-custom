@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="https://maven.apache.org/XDOC/2.0 https://maven.apache.org/xsd/xdoc-2.0.xsd">
+
+    <properties>
+        <title>Windows and Frames</title>
+        <author email="mbowler@GargoyleSoftware.com">Mike Bowler</author>
+        <author>Ahmed Ashour</author>
+        <author>Ronald Brill</author>
+    </properties>
+
+    <body>
+        <section name="Content" id="content">
+            <macro name="toc">
+            </macro>
+        </section>
+
+        <section name="WebWindow">
+            <p>
+                All pages are contained within WebWindow objects.  This could be a
+                TopLevelWindow representing an actual browser window, an
+                HtmlFrame representing a &lt;frame&gt; element or an
+                HtmlInlineFrame representing an &lt;iframe&gt; element.
+            </p>
+            <p>
+                When a WebClient is first instantiated, a TopLevelWindow is automatically created.
+                You could think of this as being the first window displayed by a web browser.  Calling
+                WebClient.getPage(WebWindow, WebRequest)
+                will load the new page into this window.
+                <br/>
+                Closing the last (TopLevel)Window of an WebClient will automatically open a new (empty) window. 
+            </p>
+            <p>
+                The JavaScript open() function can be used to load pages into other windows.  New WebWindow
+                objects will be created automatically by this function.
+            </p>
+        </section>
+
+        <section name="WebWindowEvents">
+            <p>
+                If you wish to be notified when windows are created or pages are loaded, you need to register a
+                <a href="apidocs/org/htmlunit/WebWindowListener.html">WebWindowListener</a> with the WebClient via the
+                method WebClient.addWebWindowListener(WebWindowListener)
+            </p>
+            <p>
+                When a window was opened either by JavaScript or through the WebClient, a WebWindowEvent will be
+                fired and passed into the
+                WebWindowListener.webWindowOpened(WebWindowEvent)
+                method. Note that both the new and old pages in the event will be null as the window does not
+                have any content loaded at this point. If a URL was specified during creation of the window then the page
+                will be loaded and another event will be fired as described below.
+            </p>
+            <p>
+                When a new page was loaded into a specific window, a WebWindowEvent will be fired and passed into the
+                WebWindowListener.webWindowContentChanged(WebWindowEvent) method.
+            </p>
+            <p>
+                When an existing window was close, the WebWindowListener.webWindowClosed(WebWindowEvent) is fired.
+            </p>
+        </section>
+
+        <section name="Frame Example I">
+            <p>
+                Getting the page inside &lt;frame&gt; element or &lt;iframe&gt; element can be done by using
+                HtmlPage.getFrames().<br/>
+                Suppose you have the following page:
+            </p>
+            <source><![CDATA[
+<html>
+  <body>
+    <iframe src="two.html">
+  </body>
+</html>]]></source>
+            <p>
+                You can use the following code to get the content of <tt>two.html</tt>:
+            </p>
+            <source><![CDATA[
+final List<FrameWindow> window = page.getFrames();
+final HtmlPage pageTwo = (HtmlPage) window.get(0).getEnclosedPage();]]></source>
+        </section>
+
+        <section name="Frame Example II">
+            <p>
+                Another example that navigates API docs to get a desired page of a class:
+            </p>
+            <source><![CDATA[
+final WebClient client = new WebClient();
+final HtmlPage mainPage = client.getPage("https://www.htmlunit.org/apidocs/index.html");]]></source>
+
+            <p>
+                To get the page of the first frame (at upper left) and click the sixth link:
+            </p>
+            <source><![CDATA[
+final HtmlPage packageListPage = (HtmlPage) mainPage.getFrames().get(0).getEnclosedPage();
+packageListPage.getAnchors().get(5).click();]]></source>
+
+            <p>
+                To get the page of the frame named 'packageFrame' (at lower left) and click the second link:
+            </p>
+            <source><![CDATA[
+final HtmlPage packagePage = (HtmlPage) mainPage.getFrameByName("packageFrame").getEnclosedPage();
+packagePage.getAnchors().get(1).click();]]></source>
+        
+            <p>
+                To get the page of the frame named 'classFrame' (at right):
+            </p>
+            <source><![CDATA[
+final HtmlPage classPage = (HtmlPage) mainPage.getFrameByName("classFrame").getEnclosedPage();]]></source>
+        </section>
+    </body>
+</document>

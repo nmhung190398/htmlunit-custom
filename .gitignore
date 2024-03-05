@@ -1,0 +1,7 @@
+/target/
+/.classpath
+/.project
+/.settings/
+/.checkstyle
+/test.properties
+/.idea/
