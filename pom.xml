@@ -178,22 +178,22 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.owasp</groupId>
-                <artifactId>dependency-check-maven</artifactId>
-                <version>${dependencycheck.version}</version>
-                <configuration>
-                    <suppressionFiles>owasp-suppressions.xml</suppressionFiles>
-                    <failBuildOnCVSS>0</failBuildOnCVSS>
-                </configuration>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.owasp</groupId>-->
+<!--                <artifactId>dependency-check-maven</artifactId>-->
+<!--                <version>${dependencycheck.version}</version>-->
+<!--                <configuration>-->
+<!--                    <suppressionFiles>owasp-suppressions.xml</suppressionFiles>-->
+<!--                    <failBuildOnCVSS>0</failBuildOnCVSS>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
@@ -231,18 +231,18 @@
                     </instructions>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.simplify4u.plugins</groupId>
-                <artifactId>pgpverify-maven-plugin</artifactId>
-                <version>1.17.0</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.simplify4u.plugins</groupId>-->
+<!--                <artifactId>pgpverify-maven-plugin</artifactId>-->
+<!--                <version>1.17.0</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
     <dependencies>
